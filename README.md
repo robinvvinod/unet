@@ -69,4 +69,5 @@ Run [`train.py`](train.py) once all the configuration is done to train your netw
 
 ### Testing
 
-WIP
+Run [`evaluate.py`](evaluate.py) or [`predict.py`](predict.py) with the appropriate list_IDs provided to the `DataGenerator`
+
