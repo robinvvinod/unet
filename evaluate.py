@@ -1,3 +1,4 @@
+# yapf: disable
 from keras.models import load_model
 from hyperparameters import save_path, dimensions, num_gpu
 from datagenerator import DataGenerator
