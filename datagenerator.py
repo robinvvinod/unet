@@ -34,6 +34,7 @@ class DataGenerator(Sequence):
 
     def __data_generation(self, list_IDs_temp):
 
+        # Creates an empty placeholder array that will be populated with data that is to be supplied
         X = np.empty((self.batch_size, *self.dim, self.n_channels))
         y = np.empty((self.batch_size, *self.dim, self.n_channels))
 
