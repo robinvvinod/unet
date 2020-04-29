@@ -18,7 +18,11 @@ dropout = 0.5
 # Training parameters
 num_initial_filters = 32
 batchnorm = True
+
+# batch_size must be a multiple of num_gpu to ensure GPUs are not starved of data
 num_gpu = 8
+batch_size = 8
+
 learning_rate = 0.00001
 loss = tversky_loss
 metrics = [dice_coef]
