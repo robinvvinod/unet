@@ -43,7 +43,6 @@ print('Memory Footprint/GPU: ' + str(memory_usage(1, model)) + 'GB')
 
 train_gen = DataGenerator(list_IDs=[], dim=dimensions, batch_size=num_gpu, shuffle=True)
 
-K.get_session().run(tf.global_variables_initializer())
 if num_gpu > 1:
     parallel_model.fit_generator(train_gen, steps_per_epoch=1, epochs=epochs, verbose=2, callbacks=callbacks, workers=20)
 else:
