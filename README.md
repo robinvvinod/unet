@@ -20,9 +20,7 @@ This repository depends on the following libraries:
 
 ### Building your network
 
-The pre-implemented layers are available in [`layers3D.py`](layers3D.py). 
-
-Use the layers to build your preferred network configuration in [`network.py`](network.py)
+The pre-implemented layers are available in [`layers3D.py`](layers3D.py). Use the layers to build your preferred network configuration in [`network.py`](network.py)
 
 ##### Example
 
