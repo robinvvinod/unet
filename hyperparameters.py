@@ -22,6 +22,7 @@ batchnorm = True
 # batch_size must be a multiple of num_gpu to ensure GPUs are not starved of data
 num_gpu = 8
 batch_size = 8
+steps_per_epoch = 1
 
 learning_rate = 0.00001
 loss = tversky_loss
