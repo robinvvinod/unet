@@ -17,6 +17,8 @@ This repository depends on the following libraries:
 * Tensorflow
 * Keras
 * Python 3
+* Numpy
+* Matplotlib
 
 ### Building your network
 
