@@ -18,7 +18,7 @@ num_initial_filters = 32
 batchnorm = True
 num_gpu = 8
 learning_rate = 0.00001
-loss = tversky
+loss = tversky_loss
 metrics = ['dice_coef']
 epochs = 70000
 

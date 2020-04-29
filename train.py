@@ -6,6 +6,7 @@ from keras.optimizers import Adam
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau, CSVLogger, TerminateOnNaN
 from keras import backend as K
 from hyperparameters import *
+from losses import *
 from network import network
 from datagenerator import DataGenerator
 from modelmemory import memory_usage
