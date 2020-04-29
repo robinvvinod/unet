@@ -138,7 +138,7 @@ def UnetGatingSignal(input_tensor, batchnorm=True):
     # 1x1x1 convolution to consolidate gating signal into the required dimensions
 
     shape = K.int_shape(input_tensor)
-    conv = Conv3D(filters=shape[3], kernel_size=1, strides=1, padding="same", kernel_initializer="he_normal")(input_tensor)
+    conv = Conv2D(filters=shape[3], kernel_size=1, strides=1, padding="same", kernel_initializer="he_normal")(input_tensor)
     if batchnorm:
         conv = BatchNormalization()(conv)
     output = LeakyReLU(alpha=alpha)(conv)

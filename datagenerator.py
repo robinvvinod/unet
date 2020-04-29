@@ -4,7 +4,7 @@ import numpy as np
 
 class DataGenerator(Sequence):
 
-    def __init__(self, list_IDs, labels, batch_size=1, dim=(512,512,512), n_channels=1, n_classes=1, shuffle=True):
+    def __init__(self, list_IDs, labels=[], batch_size=1, dim=(512,512,512), n_channels=1, n_classes=1, shuffle=True):
         self.dim = dim
         self.batch_size = batch_size
         self.labels = labels

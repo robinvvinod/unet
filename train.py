@@ -1,4 +1,5 @@
 # yapf: disable
+import os
 import tensorflow as tf
 from keras.layers import Input
 from keras.utils import multi_gpu_model
@@ -15,7 +16,7 @@ from modelmemory import memory_usage
 # Compiling
 ################################################################################
 
-input_img = Input(dimensions)
+input_img = Input(input_dimensions)
 with tf.device('/cpu:0'):
     model = network(input_img, n_filters=num_initial_filters, dropout=dropout, batchnorm=batchnorm)
 
@@ -40,7 +41,7 @@ print('Memory Footprint/GPU: ' + str(memory_usage(1, model)) + 'GB')
 # Training
 ################################################################################
 
-train_gen = DataGenerator(list_IDs=[], labels=[], dim=dimensions, batch_size=num_gpu, shuffle=True)
+train_gen = DataGenerator(list_IDs=[], dim=dimensions, batch_size=num_gpu, shuffle=True)
 
 K.get_session().run(tf.global_variables_initializer())
 if num_gpu > 1:
