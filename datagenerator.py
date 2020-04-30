@@ -15,9 +15,17 @@ class DataGenerator(Sequence):
         self.on_epoch_end()
 
     def __len__(self):
+
+        # Counts the number of possible batches that can be made from the total available datasets in list_IDs
+        # Rule of thumb, num_datasets % batch_size = 0, so every sample is seen
         return int(np.floor(len(self.list_IDs) / self.batch_size))
 
     def __getitem__(self, index):
+
+        # Gets the indexes of batch_size number of data from list_IDs for one epoch
+        # If batch_size = 8, 8 files/indexes from list_ID are selected
+        # Makes sure that on next epoch, the batch does not come from same indexes as the previous batch
+        # The same batch is not seen again until __len()__ - 1 batches are done
 
         indexes = self.indexes[index * self.batch_size:(index + 1) * self.batch_size]
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
