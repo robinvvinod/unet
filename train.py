@@ -41,7 +41,13 @@ print('Memory Footprint/GPU: ' + str(memory_usage(1, model)) + 'GB')
 # Training
 ################################################################################
 
-train_gen = DataGenerator(list_IDs=[], dim=dimensions, batch_size=batch_size, shuffle=True)
+list_IDs = []
+for filename in os.listdir(train_path):
+    # Write logic to add filenames of train images to list_IDs which will be processed by DataGenerator
+    # later on
+    pass
+
+train_gen = DataGenerator(list_IDs=list_IDs, dim=dimensions, batch_size=batch_size, shuffle=True)
 
 if num_gpu > 1:
     parallel_model.fit_generator(train_gen, steps_per_epoch=steps_per_epoch, epochs=epochs, verbose=2, callbacks=callbacks, workers=20)

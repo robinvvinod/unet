@@ -33,4 +33,5 @@ epochs = 70000
 checkpoint_path = ""
 log_path = ""
 save_path = ""
-data_path = ""
+train_path = ""
+test_path = ""
