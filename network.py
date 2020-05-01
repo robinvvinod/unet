@@ -28,18 +28,15 @@ def network(input_img, n_filters=16, dropout=0.5, batchnorm=True):
 
     # expansive path
     
-    gating = UnetGatingSignal(b0, batchnorm=batchnorm)
-    attn0 = AttnGatingBlock(p3, gating, n_filters * 16)
+    attn0 = AttnGatingBlock(p3, b0, n_filters * 16)
     u0 = transpose_block(b0, attn0, n_filters=n_filters * 8)  # 64x64x64
     d0 = SpatialDropout3D(dropout)(u0)
     
-    gating = UnetGatingSignal(d0, batchnorm=batchnorm)
-    attn1 = AttnGatingBlock(p2, gating, n_filters * 8)
+    attn1 = AttnGatingBlock(p2, d0, n_filters * 8)
     u1 = transpose_block(d0, attn1, n_filters=n_filters * 4)  # 128x128x128
     d1 = SpatialDropout3D(dropout)(u1)
     
-    gating = UnetGatingSignal(d1, batchnorm=batchnorm)
-    attn2 = AttnGatingBlock(p1, gating, n_filters * 4)
+    attn2 = AttnGatingBlock(p1, d1, n_filters * 4)
     u2 = transpose_block(d1, attn2, n_filters=n_filters * 2)  # 256x256x256
     d2 = SpatialDropout3D(dropout)(u2)
     

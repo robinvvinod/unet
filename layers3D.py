@@ -106,10 +106,6 @@ def AttnGatingBlock(x, g, inter_shape):
     # Getting the x signal to the same shape as the gating signal
     theta_x = Conv3D(filters=inter_shape, kernel_size=3, strides=(shape_x[1] // shape_g[1], shape_x[2] // shape_g[2], shape_x[3] // shape_g[3]), padding='same')(x)
 
-    # TODO Is this layer necessary?
-    # shape_theta_x = K.int_shape(theta_x)
-    # upsample_phi_g = Conv3DTranspose(filters=inter_shape, kernel_size=(3,3,3), strides=(shape_theta_x[1] // shape_g[1], shape_theta_x[2] // shape_g[2], shape_theta_x[3] // shape_g[3]), padding='same')(phi_g)
-
     # Element-wise addition of the gating and x signals
     add_xg = add([phi_g, theta_x])
     add_xg = Activation('relu')(add_xg)
@@ -133,9 +129,10 @@ def AttnGatingBlock(x, g, inter_shape):
     output = BatchNormalization()(output)
     return output
 
-def UnetGatingSignal(input_tensor, batchnorm=True):
+def GatingSignal(input_tensor, batchnorm=True):
 
     # 1x1x1 convolution to consolidate gating signal into the required dimensions
+    # Not required most of the time, unless another ReLU and batch_norm is required on gating signal
 
     shape = K.int_shape(input_tensor)
     conv = Conv3D(filters=shape[4], kernel_size=1, strides=1, padding="same", kernel_initializer="he_normal")(input_tensor)
