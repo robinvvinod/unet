@@ -18,7 +18,7 @@ from modelmemory import memory_usage
 
 input_img = Input(input_dimensions)
 with tf.device('/cpu:0'):
-    model = network(input_img, n_filters=num_initial_filters, dropout=dropout, batchnorm=batchnorm)
+    model = network(input_img, n_filters=num_initial_filters, batchnorm=batchnorm)
 
 if num_gpu > 1:
     parallel_model = multi_gpu_model(model, gpus=num_gpu, cpu_merge=False)

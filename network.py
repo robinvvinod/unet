@@ -5,7 +5,7 @@ from layers3D import *
 
 # Use the functions provided in layers3D to build the network
 
-def network(input_img, n_filters=16, dropout=0.5, batchnorm=True):
+def network(input_img, n_filters=16, batchnorm=True):
 
     # contracting path
     
