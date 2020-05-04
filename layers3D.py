@@ -43,24 +43,31 @@ def residual_block(input_tensor, n_filters, kernel_size=3, strides=1, batchnorm=
     return output
 
 
-def inception_block(input_tensor, n_filters, kernel_size=3, strides=1, batchnorm=True, recurrent=1, layers=()):
+def inception_block(input_tensor, n_filters, kernel_size=3, strides=1, batchnorm=True, recurrent=1, layers=[]):
 
     # Inception-style convolutional block similar to InceptionNet
     # The first convolution follows the function arguments, while subsequent inception convolutions follow the parameters in
     # argument, layers
 
-    # layers is a tuple containing the different kernel_sizes and dilation rates of the secondary inception convolutions
-    # E.g => layers=( ((3,3,3),(2,2,2)), ((5,5,5),1), (7,1) )
-    # This will implement 3 convolutions of kernel_sizes 3x3x3, 5x5x5, 7x7x7 with respective dilation rates of 2x2x2,
-    # 1x1x1 and 1x1x1
+    # layers is a nested list containing the different secondary inceptions in the format of (kernel_size, dil_rate)
+
+    # E.g => layers=[ [(3,1),(3,1)], [(5,1)], [(3,1),(3,2)] ]
+    # This will implement 3 sets of secondary convolutions 
+    # Set 1 => 3x3 dil = 1 followed by another 3x3 dil = 1
+    # Set 2 => 5x5 dil = 1
+    # Set 3 => 3x3 dil = 1 followed by 3x3 dil = 2
+
 
     res = conv3d_block(input_tensor, n_filters=n_filters, kernel_size=kernel_size, strides=strides, batchnorm=batchnorm, dilation_rate=1, recurrent=recurrent)
 
     temp = []
-    for conv in layers:
-        incep_kernel_size = conv[0]
-        incep_dilation_rate = conv[1]
-        temp.append(conv3d_block(res, n_filters=n_filters, kernel_size=incep_kernel_size, strides=1, batchnorm=batchnorm, dilation_rate=incep_dilation_rate, recurrent=recurrent))
+    for layer in layers:
+        local_res = res
+        for conv in layer:
+            incep_kernel_size = conv[0]
+            incep_dilation_rate = conv[1]
+            local_res = conv3d_block(local_res, n_filters=n_filters, kernel_size=incep_kernel_size, strides=1, batchnorm=batchnorm, dilation_rate=incep_dilation_rate, recurrent=recurrent)
+        temp.append(local_res)
 
     temp = concatenate(temp)
     res = conv3d_block(temp, n_filters=n_filters, kernel_size=1, strides=1, batchnorm=batchnorm, dilation_rate=1, recurrent=recurrent)
