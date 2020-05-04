@@ -50,8 +50,8 @@ for filename in os.listdir(train_path):
 train_gen = DataGenerator(list_IDs=list_IDs, dim=dimensions, batch_size=batch_size, shuffle=True)
 
 if num_gpu > 1:
-    parallel_model.fit_generator(train_gen, steps_per_epoch=steps_per_epoch, epochs=epochs, verbose=2, callbacks=callbacks, workers=20)
+    parallel_model.fit_generator(train_gen, steps_per_epoch=steps_per_epoch, epochs=epochs, verbose=2, callbacks=callbacks, workers=20, use_multiprocessing=True)
 else:
-    model.fit_generator(train_gen, steps_per_epoch=steps_per_epoch, epochs=epochs, verbose=2, callbacks=callbacks, workers=20)
+    model.fit_generator(train_gen, steps_per_epoch=steps_per_epoch, epochs=epochs, verbose=2, callbacks=callbacks, workers=20, use_multiprocessing=True)
 
 model.save(save_path)

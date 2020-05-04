@@ -34,6 +34,6 @@ def network(input_img, n_filters=16, batchnorm=True):
     
     u3 = transpose_block(u2, c0, n_filters=n_filters)  # 512x512x512
 
-    outputs = Conv3D(filters=1, kernel_size=1, strides=1, activation='sigmoid')(d3)
+    outputs = Conv3D(filters=1, kernel_size=1, strides=1, activation='sigmoid')(u3)
     model = Model(inputs=[input_img], outputs=[outputs])
     return model
