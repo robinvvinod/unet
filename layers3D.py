@@ -69,7 +69,7 @@ def inception_block(input_tensor, n_filters, kernel_size=3, strides=1, batchnorm
         temp.append(local_res)
 
     temp = concatenate(temp)
-    res = conv3d_block(temp, n_filters=n_filters, kernel_size=1, strides=1, batchnorm=batchnorm, dilation_rate=1, recurrent=recurrent)
+    res = conv3d_block(temp, n_filters=n_filters, kernel_size=1, strides=1, batchnorm=batchnorm, dilation_rate=1)
 
     shortcut = conv3d_block(input_tensor, n_filters=n_filters, kernel_size=1, strides=strides, batchnorm=batchnorm, dilation_rate=1)
     if batchnorm:
