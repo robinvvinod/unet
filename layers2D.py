@@ -52,11 +52,10 @@ def inception_block(input_tensor, n_filters, kernel_size=3, strides=1, batchnorm
     # layers is a nested list containing the different secondary inceptions in the format of (kernel_size, dil_rate)
 
     # E.g => layers=[ [(3,1),(3,1)], [(5,1)], [(3,1),(3,2)] ]
-    # This will implement 3 sets of secondary convolutions 
+    # This will implement 3 sets of secondary convolutions
     # Set 1 => 3x3 dil = 1 followed by another 3x3 dil = 1
     # Set 2 => 5x5 dil = 1
     # Set 3 => 3x3 dil = 1 followed by 3x3 dil = 2
-
 
     res = conv2d_block(input_tensor, n_filters=n_filters, kernel_size=kernel_size, strides=strides, batchnorm=batchnorm, dilation_rate=1, recurrent=recurrent)
 
@@ -80,7 +79,7 @@ def inception_block(input_tensor, n_filters, kernel_size=3, strides=1, batchnorm
     return output
 
 
-def transpose_block(input_tensor, skip_tensor, n_filters, kernel_size=3, strides=1):
+def transpose_block(input_tensor, skip_tensor, n_filters, kernel_size=3, strides=1, batchnorm=True, recurrent=1):
 
     # A wrapper of the Keras Conv2DTranspose block to serve as a building block for upsampling layers
 
@@ -88,7 +87,9 @@ def transpose_block(input_tensor, skip_tensor, n_filters, kernel_size=3, strides
     shape_xskip = K.int_shape(skip_tensor)
 
     conv = Conv2DTranspose(filters=n_filters, kernel_size=kernel_size, padding='same', strides=(shape_xskip[1] // shape_x[1], shape_xskip[2] // shape_x[2]), kernel_initializer="he_normal")(input_tensor)
-    act = LeakyReLU(alpha=alpha)(conv)
+    conv = LeakyReLU(alpha=alpha)(conv)
+
+    act = conv2d_block(conv, n_filters=n_filters, kernel_size=kernel_size, strides=1, batchnorm=batchnorm, dilation_rate=1, recurrent=recurrent)
     output = Concatenate(axis=3)([act, skip_tensor])
     return output
 
