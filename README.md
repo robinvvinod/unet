@@ -28,7 +28,7 @@ The pre-implemented layers are available in [`layers3D.py`](layers3D.py). Use th
 
 ```
 from layers3D import *
-from keras.models import Model
+from tensorflow.keras.models import Model
 
 def network(input_img, n_filters=16, dropout=0.5, batchnorm=True):
     outputs = inception_block(input_img, n_filters=n_filters, batchnorm=batchnorm, strides=1, recurrent=2)
