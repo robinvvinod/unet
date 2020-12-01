@@ -1,6 +1,6 @@
-# yapf: disable
-from keras import backend as K
+import tensorflow.keras.backend as K
 import numpy as np
+
 
 def memory_usage(batch_size, model):
     shapes_mem_count = 0
@@ -12,8 +12,10 @@ def memory_usage(batch_size, model):
             single_layer_mem *= s
         shapes_mem_count += single_layer_mem
 
-    trainable_count = np.sum([K.count_params(w) for w in model.trainable_weights])
-    non_trainable_count = np.sum([K.count_params(w) for w in model.non_trainable_weights])
+    trainable_count = np.sum(
+        [K.count_params(w) for w in model.trainable_weights])
+    non_trainable_count = np.sum(
+        [K.count_params(w) for w in model.non_trainable_weights])
 
     number_size = 4.0
     if K.floatx() == 'float16':
@@ -21,6 +23,7 @@ def memory_usage(batch_size, model):
     if K.floatx() == 'float64':
         number_size = 8.0
 
-    total_memory = number_size * (batch_size * shapes_mem_count + trainable_count + non_trainable_count)
-    gbytes = np.round(total_memory / (1024.0 ** 3), 3)
+    total_memory = number_size * (batch_size * shapes_mem_count +
+                                  trainable_count + non_trainable_count)
+    gbytes = np.round(total_memory / (1024.0**3), 3)
     return gbytes

@@ -1,10 +1,16 @@
-# yapf: disable
-from keras.utils import Sequence
+from tensorflow.keras.utils import Sequence
 import numpy as np
 
-class DataGenerator(Sequence):
 
-    def __init__(self, list_IDs, labels=[], batch_size=1, dim=(512,512,512), n_channels=1, n_classes=1, shuffle=True):
+class DataGenerator(Sequence):
+    def __init__(self,
+                 list_IDs,
+                 labels=[],
+                 batch_size=1,
+                 dim=(512, 512, 512),
+                 n_channels=1,
+                 n_classes=1,
+                 shuffle=True):
         self.dim = dim
         self.batch_size = batch_size
         self.labels = labels
@@ -27,7 +33,8 @@ class DataGenerator(Sequence):
         # Makes sure that on next epoch, the batch does not come from same indexes as the previous batch
         # The same batch is not seen again until __len()__ - 1 batches are done
 
-        indexes = self.indexes[index * self.batch_size:(index + 1) * self.batch_size]
+        indexes = self.indexes[index * self.batch_size:(index + 1) *
+                               self.batch_size]
         list_IDs_temp = [self.list_IDs[k] for k in indexes]
 
         X, y = self.__data_generation(list_IDs_temp)
